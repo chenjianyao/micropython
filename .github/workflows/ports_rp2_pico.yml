@@ -6,7 +6,7 @@ on:
       version:
         description: 'Version tag'
         required: true
-        default: 'v1.29.0'
+        default: '1.29.0.smile'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

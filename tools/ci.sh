@@ -501,23 +501,26 @@ function ci_rp2_setup {
     ci_picotool_setup
 }
 
+# 只编译 BOARD=RPI_PICO 固件
 function ci_rp2_build {
     make ${MAKEOPTS} -C mpy-cross
     make ${MAKEOPTS} -C ports/rp2 submodules
     make ${MAKEOPTS} -C ports/rp2
-    make ${MAKEOPTS} -C ports/rp2 BOARD=RPI_PICO_W submodules
-    # Legacy USER_C_MODULES coverage on RPI_PICO_W.
-    make ${MAKEOPTS} -C ports/rp2 BOARD=RPI_PICO_W USER_C_MODULES=../../examples/usercmodule/micropython.cmake
-    make ${MAKEOPTS} -C ports/rp2 BOARD=RPI_PICO2 submodules
-    # Test c_module() on RPI_PICO2.
-    make ${MAKEOPTS} -C ports/rp2 BOARD=RPI_PICO2 FROZEN_MANIFEST="$(pwd)/tests/tools/manifest_c_module.py"
-    make ${MAKEOPTS} -C ports/rp2 BOARD=W5100S_EVB_PICO submodules
-    # This build doubles as a build test for disabling threads in the config
-    make ${MAKEOPTS} -C ports/rp2 BOARD=W5100S_EVB_PICO CFLAGS_EXTRA=-DMICROPY_PY_THREAD=0
 
-    # Test building ninaw10 driver and NIC interface.
-    make ${MAKEOPTS} -C ports/rp2 BOARD=ARDUINO_NANO_RP2040_CONNECT submodules
-    make ${MAKEOPTS} -C ports/rp2 BOARD=ARDUINO_NANO_RP2040_CONNECT
+
+    # make ${MAKEOPTS} -C ports/rp2 BOARD=RPI_PICO_W submodules
+    # # Legacy USER_C_MODULES coverage on RPI_PICO_W.
+    # make ${MAKEOPTS} -C ports/rp2 BOARD=RPI_PICO_W USER_C_MODULES=../../examples/usercmodule/micropython.cmake
+    # make ${MAKEOPTS} -C ports/rp2 BOARD=RPI_PICO2 submodules
+    # # Test c_module() on RPI_PICO2.
+    # make ${MAKEOPTS} -C ports/rp2 BOARD=RPI_PICO2 FROZEN_MANIFEST="$(pwd)/tests/tools/manifest_c_module.py"
+    # make ${MAKEOPTS} -C ports/rp2 BOARD=W5100S_EVB_PICO submodules
+    # # This build doubles as a build test for disabling threads in the config
+    # make ${MAKEOPTS} -C ports/rp2 BOARD=W5100S_EVB_PICO CFLAGS_EXTRA=-DMICROPY_PY_THREAD=0
+
+    # # Test building ninaw10 driver and NIC interface.
+    # make ${MAKEOPTS} -C ports/rp2 BOARD=ARDUINO_NANO_RP2040_CONNECT submodules
+    # make ${MAKEOPTS} -C ports/rp2 BOARD=ARDUINO_NANO_RP2040_CONNECT
 }
 
 ########################################################################################
