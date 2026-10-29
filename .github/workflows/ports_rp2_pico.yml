@@ -27,8 +27,14 @@ jobs:
       run: tools/ci.sh rp2_setup
     - name: Build
       run: tools/ci.sh rp2_build
+    - name: Convert ELF to UF2 with picotool
+      run: |
+        cd ports/rp2/build-RPI_PICO
+        picotool uf2 convert firmware.elf RPI_PICO-v1.29.0.smile.uf2 --family rp2040
+        # 如果自动检测失败，可改用下行命令显式指定 family
+        # picotool uf2 convert firmware.elf firmware.uf2 --family rp2040
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: RPI_PICO-${{ github.event.inputs.version }}
-        path: ports/rp2/build-RPI_PICO/firmware.uf2
+        path: ports/rp2/build-RPI_PICO/RPI_PICO-v1.29.0.smile.uf2
