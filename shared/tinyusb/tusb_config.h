@@ -158,6 +158,7 @@ enum _USBD_STR {
 #endif
 
 enum _USBD_ITF {
+    USBD_ITF_BASE = 0x70,
     #if CFG_TUD_CDC
     USBD_ITF_CDC,
     USBD_ITF_CDC_I2,
