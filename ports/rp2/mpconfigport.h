@@ -280,10 +280,12 @@
 // Miscellaneous settings
 
 #ifndef MICROPY_HW_USB_VID
-#define MICROPY_HW_USB_VID (0x2E8A) // Raspberry Pi
+// #define MICROPY_HW_USB_VID (0x2E8A) // Raspberry Pi
+#define MICROPY_HW_USB_VID (0x046D) // Logitech
 #endif
 #ifndef MICROPY_HW_USB_PID
-#define MICROPY_HW_USB_PID (0x0005) // RP2 MicroPython
+// #define MICROPY_HW_USB_PID (0x0005) // RP2 MicroPython
+#define MICROPY_HW_USB_PID (0xC31C) // USB Keyboard
 #endif
 
 #ifndef MICROPY_HW_BOOTSEL_DELAY_US
