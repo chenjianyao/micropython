@@ -55,7 +55,7 @@
 #if MICROPY_HW_ENABLE_USBDEV
 // Enable USB-CDC serial port
 #ifndef MICROPY_HW_USB_CDC
-#define MICROPY_HW_USB_CDC (0) // 禁用 USB CDC 串口
+#define MICROPY_HW_USB_CDC (1) // 启用 USB CDC 串口
 #endif
 // Enable USB Mass Storage with FatFS filesystem.
 #ifndef MICROPY_HW_USB_MSC
