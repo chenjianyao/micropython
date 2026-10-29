@@ -27,14 +27,14 @@ jobs:
       run: tools/ci.sh rp2_setup
     - name: Build
       run: tools/ci.sh rp2_build
-    - name: Convert ELF to UF2 with picotool
+    - name: Rename UF2
       run: |
         cd ports/rp2/build-RPI_PICO
         DATE=$(TZ=Asia/Shanghai date +%Y%m%d)
         UF2_NAME="RPI_PICO_${DATE}-v1.29.0.uf2"
         echo "UF2_NAME=${UF2_NAME}" >> "$GITHUB_ENV"
         ls -la
-        picotool uf2 convert firmware.elf "${UF2_NAME}" --family rp2040
+        cp firmware.uf2 "${UF2_NAME}"
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
