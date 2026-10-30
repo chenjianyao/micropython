@@ -93,23 +93,23 @@ while True:
         counter.init_skill_count()
 
         # 向左移动
-        move_hold_ms1 = random.randint(80, 110)
-        move_hold_ms2 = random.randint(80, 110)
-        move_hold_ms3 = random.randint(80, 110)
+        move_hold_ms1 = random.randint(80, 90)
+        move_hold_ms2 = random.randint(80, 90)
+        move_hold_ms3 = random.randint(80, 90)
         times.sleep_random_ms()
         keyboard.press_key(KeyCode.LEFT, move_hold_ms1)
         times.sleep_random_ms()
         keyboard.press_key(KeyCode.LEFT, move_hold_ms2)
-        times.sleep_random_ms()
-        keyboard.press_key(KeyCode.LEFT, move_hold_ms3)
+        # times.sleep_random_ms()
+        # keyboard.press_key(KeyCode.LEFT, move_hold_ms3)
 
         # 攻击一下
         time.sleep_ms(10000)
         keyboard.press_key(KeyCode.S)
 
         # 向右移动
-        times.sleep_random_ms()
-        keyboard.press_key(KeyCode.RIGHT, move_hold_ms3)
+        # times.sleep_random_ms()
+        # keyboard.press_key(KeyCode.RIGHT, move_hold_ms3)
         times.sleep_random_ms()
         keyboard.press_key(KeyCode.RIGHT, move_hold_ms2)
         times.sleep_random_ms()
