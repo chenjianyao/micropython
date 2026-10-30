@@ -37,6 +37,11 @@ def key_up(key):
         pressed.remove(key)
         kbd.send_keys(list(pressed))
 
+def key_up_all():
+    """ 释放所有按键 """
+    pressed.clear()
+    kbd.send_keys([])
+
 def press_key(key, duration=None):
     """ 按键按下持续一段时间并释放 duration: 保持时长（秒），None 则随机"""
     if duration is None:

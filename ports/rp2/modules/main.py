@@ -9,18 +9,13 @@
 击键间隔（inter-key interval）普通打字者 200–300 ms；熟练者约 100–150 ms
 
 """
-from machine import Pin
-import machine
 import time
 import random
-import usb.device
-from usb.device.keyboard import KeyboardInterface, KeyCode
-from cms import keyboard, led
+from usb.device.keyboard import KeyCode
+from common import keyboard, led, usb
+from cms import counter
 
-# ========== 伪装参数 ==========  
-
-current_attack_count = 0      # 攻击次数
-max_attack = 80               # 最大攻击次数
+# ========================================
 max_z = 50
 
 # 100 秒 Q，W
@@ -35,71 +30,74 @@ next_q_time   = time.ticks_add(time.ticks_ms(), Q_PERIOD_MS + random.randint(-JI
 next_e_time   = time.ticks_add(time.ticks_ms(), E_PERIOD_MS + random.randint(-JITTER_MS, JITTER_MS))
 next_t_time   = time.ticks_add(time.ticks_ms(), T_PERIOD_MS + random.randint(-JITTER_MS, JITTER_MS))
 
-BOOT_DELAY_MS = 3000          # 上电后延迟 3 秒再开始
 BASE_INTERVAL_MS = 800        # 基础间隔：每秒一次
 INTERVAL_JITTER_MS = 300      # 间隔抖动 ±300ms
 
-
-# 1. 启动延迟：在 USB 枚举完成后、开始发键之前等待
-time.sleep_ms(BOOT_DELAY_MS)
+# ========================================
+usb.init()
 led.init()
 keyboard.init()
 
 # ========== 主循环 ==========
 while True:
+    now = time.ticks_ms()
     # ========== 1. led 闪烁 ==========
     led.blink()
 
-    now = time.ticks_ms()
-    # ========== 自动按攻击键 [S] ==================== 
-    # 2. 自动按键
+    # ========== 2.自动按攻击键 [S] ==================== 
     keyboard.press_key(KeyCode.S)
-    current_attack_count = current_attack_count + 1
+    counter.increase_attack_count()
 
-    # ========== 定时按辅助键 [Q, W, E, R, T] ==========
+    # ========== 3.定时按辅助键 [Q, W, E, R, T] ==========
     if time.ticks_diff(now, next_q_time) >= 0:
         # 100 秒按一次 Q，W
         next_q_time = time.ticks_add(time.ticks_ms(), Q_PERIOD_MS + random.randint(-JITTER_MS, JITTER_MS))
         keyboard.sleep_safe_ms()
         keyboard.press_key(KeyCode.Q)
+        counter.increase_skill_count()
         keyboard.sleep_safe_ms()
         keyboard.press_key(KeyCode.W)
+        counter.increase_skill_count()
 
-    if time.ticks_diff(now, next_e_time) >= 0:
+    elif time.ticks_diff(now, next_e_time) >= 0:
         # 200 秒按一次 E, R
         next_e_time = time.ticks_add(time.ticks_ms(), E_PERIOD_MS + random.randint(-JITTER_MS, JITTER_MS))
         keyboard.sleep_safe_ms()
         keyboard.press_key(KeyCode.E)
+        counter.increase_skill_count()
         keyboard.sleep_safe_ms()
         keyboard.press_key(KeyCode.R)
+        counter.increase_skill_count()
 
-    if time.ticks_diff(now, next_t_time) >= 0:
+    elif time.ticks_diff(now, next_t_time) >= 0:
         # 300 秒按一次 T
         next_t_time = time.ticks_add(time.ticks_ms(), T_PERIOD_MS + random.randint(-JITTER_MS, JITTER_MS))
         keyboard.sleep_safe_ms()
         keyboard.press_key(KeyCode.T)
+        counter.increase_skill_count()
 
-    # =========== 自动左右移动 =================== 
+    # =========== 4.自动左右移动 =================== 
     # 攻击次数超限 100 下，左右运动
-    if current_attack_count > max_attack:
-        current_attack_count = 0
-        max_attack = random.randint(65, 80)
+    # 技能次数超限 21 下，左右运动
+    if counter.attack_count_exceeded_limit() or counter.skill_count_exceeded_limit():
+        counter.init_attack_count()
+        counter.init_skill_count()
         
         # 向左移动 X 毫秒
-        move_hold_ms = random.randint(450, 550)
+        move_hold_ms = random.randint(80, 110)
         keyboard.sleep_safe_ms()
         keyboard.press_key(KeyCode.LEFT, move_hold_ms)
 
-        # 跳一下
+        # 攻击一下
         keyboard.sleep_safe_ms()
-        keyboard.press_key(KeyCode.X)
+        keyboard.press_key(KeyCode.S)
         
         # 向右移动
         keyboard.sleep_safe_ms()
         keyboard.press_key(KeyCode.RIGHT, move_hold_ms)
 
     # ========== 增加干扰按键 ====================
-    if current_attack_count == max_z:
+    if counter.attack_count == max_z:
         max_z = random.randint(50, 65)
         keyboard.sleep_safe_ms()
         keyboard.press_key(KeyCode.Z)
