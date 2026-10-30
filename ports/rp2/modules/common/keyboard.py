@@ -69,10 +69,3 @@ def press_key_interval(duration=None):
         hold_ms = duration
 
     time.sleep_ms(hold_ms)
-
-
-def sleep_safe_ms():
-    """间隔 1000 - 1200ms"""
-    hold_ms = random.randint(1000, 1200)
-
-    time.sleep_ms(hold_ms)
