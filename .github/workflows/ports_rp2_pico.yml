@@ -35,7 +35,6 @@ jobs:
         echo "UF2_NAME=${UF2_NAME}" >> "$GITHUB_ENV"
         ls -la
         cp firmware.uf2 "${UF2_NAME}"
-
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
