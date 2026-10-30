@@ -32,7 +32,7 @@ next_q_time = time.ticks_add(time.ticks_ms(), Q_PERIOD_MS + random.randint(-JITT
 next_e_time = time.ticks_add(time.ticks_ms(), E_PERIOD_MS + random.randint(-JITTER_MS, JITTER_MS))
 next_t_time = time.ticks_add(time.ticks_ms(), T_PERIOD_MS + random.randint(-JITTER_MS, JITTER_MS))
 
-BASE_INTERVAL_MS = 800  # 基础间隔：每秒一次
+BASE_INTERVAL_MS = 1800  # 基础间隔：每秒一次
 INTERVAL_JITTER_MS = 300  # 间隔抖动 ±300ms
 
 # ========================================
@@ -122,5 +122,5 @@ while True:
         keyboard.press_key(KeyCode.Z)
 
     jitter = random.randint(-INTERVAL_JITTER_MS, INTERVAL_JITTER_MS)
-    wait_ms = max(400, BASE_INTERVAL_MS + jitter)
+    wait_ms = max(500, BASE_INTERVAL_MS + jitter)
     time.sleep_ms(wait_ms)
