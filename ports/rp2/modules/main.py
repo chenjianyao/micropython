@@ -93,30 +93,32 @@ while True:
         counter.init_attack_count()
         counter.init_skill_count()
 
-        # 向左移动
         move_hold_ms1 = random.randint(70, 80)
         move_hold_ms2 = random.randint(70, 80)
         move_hold_ms3 = random.randint(70, 80)
+        
+        # 向右移动
+        # times.sleep_random_ms()
+        # keyboard.press_key(KeyCode.RIGHT, move_hold_ms1)
+        # times.sleep_random_ms()
+        # keyboard.press_key(KeyCode.RIGHT, move_hold_ms2)
         times.sleep_random_ms()
-        keyboard.press_key(KeyCode.LEFT, move_hold_ms1)
-        # times.sleep_random_ms()
-        # keyboard.press_key(KeyCode.LEFT, move_hold_ms2)
-        # times.sleep_random_ms()
-        # keyboard.press_key(KeyCode.LEFT, move_hold_ms3)
+        keyboard.press_key(KeyCode.RIGHT, move_hold_ms3)
 
         # 攻击一下
         time.sleep_ms(10000)
         keyboard.press_key(KeyCode.S)
         times.sleep_random_ms()
         keyboard.press_key(KeyCode.S)
-
-        # 向右移动
-        # times.sleep_random_ms()
-        # keyboard.press_key(KeyCode.RIGHT, move_hold_ms3)
-        # times.sleep_random_ms()
-        # keyboard.press_key(KeyCode.RIGHT, move_hold_ms2)
+        
+        # 向左移动
         times.sleep_random_ms()
-        keyboard.press_key(KeyCode.RIGHT, move_hold_ms1)
+        keyboard.press_key(KeyCode.LEFT, move_hold_ms3)
+        # times.sleep_random_ms()
+        # keyboard.press_key(KeyCode.LEFT, move_hold_ms2)
+        # times.sleep_random_ms()
+        # keyboard.press_key(KeyCode.LEFT, move_hold_ms1)
+
 
     # ========== 增加干扰按键 ====================
     if counter.attack_count == max_z:
