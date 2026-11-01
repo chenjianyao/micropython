@@ -32,7 +32,7 @@ next_q_time = time.ticks_add(time.ticks_ms(), Q_PERIOD_MS + random.randint(-JITT
 next_e_time = time.ticks_add(time.ticks_ms(), E_PERIOD_MS + random.randint(-JITTER_MS, JITTER_MS))
 next_t_time = time.ticks_add(time.ticks_ms(), T_PERIOD_MS + random.randint(-JITTER_MS, JITTER_MS))
 
-BASE_INTERVAL_MS = 1800  # 基础间隔：每秒一次
+BASE_INTERVAL_MS = 1500  # 基础间隔：每秒一次
 INTERVAL_JITTER_MS = 300  # 间隔抖动 ±300ms
 
 # ========================================
@@ -93,9 +93,9 @@ while True:
         counter.init_skill_count()
 
         # 向左移动
-        move_hold_ms1 = random.randint(80, 90)
-        move_hold_ms2 = random.randint(80, 90)
-        move_hold_ms3 = random.randint(80, 90)
+        move_hold_ms1 = random.randint(70, 80)
+        move_hold_ms2 = random.randint(70, 80)
+        move_hold_ms3 = random.randint(70, 80)
         times.sleep_random_ms()
         keyboard.press_key(KeyCode.LEFT, move_hold_ms1)
         # times.sleep_random_ms()
