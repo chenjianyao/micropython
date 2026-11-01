@@ -8,6 +8,7 @@
 按键持续时间（keypress duration）约 80–150 毫秒，常见可粗略认为 100 毫秒左右
 击键间隔（inter-key interval）普通打字者 200–300 ms；熟练者约 100–150 ms
 
+
 """
 
 import random
