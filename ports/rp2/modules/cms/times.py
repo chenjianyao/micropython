@@ -1,3 +1,5 @@
+"""times"""
+
 import random
 import time
 

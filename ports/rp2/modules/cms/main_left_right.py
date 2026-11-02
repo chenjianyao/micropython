@@ -9,10 +9,10 @@
 import random
 import time
 
-from common import keyboard, led, times, usb
+from common import keyboard, led, usb
 from usb.device.keyboard import KeyCode
 
-from cms import counter, direction
+from cms import counter, direction, times
 
 # ========================================
 max_z = 50
