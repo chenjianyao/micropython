@@ -3,6 +3,11 @@
 from common import keyboard
 
 
+def _resolve(key_name):
+    """键名 -> KeyCode，未定义返回 None。"""
+    return keyboard.KEY_MAP.get(key_name)
+
+
 def do_release():
     keyboard.key_up_all()
 
@@ -28,8 +33,3 @@ def do_presskey_key(key_name, duration=None):
     if key is None:
         return
     keyboard.press_key(key, duration)
-
-
-def _resolve(key_name):
-    """键名 -> KeyCode，未定义返回 None。"""
-    return keyboard.KEY_MAP.get(key_name)
