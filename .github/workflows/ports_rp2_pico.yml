@@ -30,7 +30,7 @@ jobs:
     - name: Rename UF2
       run: |
         cd ports/rp2/build-RPI_PICO
-        DATE=$(TZ=Asia/Shanghai date +%Y%m%d)
+        DATE=$(TZ=Asia/Shanghai date +%Y%m%d%H%M)
         UF2_NAME="RPI_PICO_${DATE}-v1.29.0.uf2"
         echo "UF2_NAME=${UF2_NAME}" >> "$GITHUB_ENV"
         ls -la
