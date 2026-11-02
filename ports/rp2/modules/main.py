@@ -15,7 +15,7 @@ import random
 import time
 
 from cms import counter
-from common import keyboard, led, times, usb
+from common import keyboard, led, times, uart, usb
 from usb.device.keyboard import KeyCode
 
 # ========================================
@@ -40,7 +40,7 @@ INTERVAL_JITTER_MS = 300  # 间隔抖动 ±300ms
 usb.init()
 led.init()
 keyboard.init()
-
+uart.init()
 
 # ========== 主循环 ==========
 while True:
@@ -96,7 +96,7 @@ while True:
         move_hold_ms1 = random.randint(70, 80)
         move_hold_ms2 = random.randint(70, 80)
         move_hold_ms3 = random.randint(70, 80)
-        
+
         # 向右移动
         # times.sleep_random_ms()
         # keyboard.press_key(KeyCode.RIGHT, move_hold_ms1)
@@ -110,7 +110,7 @@ while True:
         keyboard.press_key(KeyCode.S)
         times.sleep_random_ms()
         keyboard.press_key(KeyCode.S)
-        
+
         # 向左移动
         times.sleep_random_ms()
         keyboard.press_key(KeyCode.LEFT, move_hold_ms3)
@@ -118,7 +118,6 @@ while True:
         # keyboard.press_key(KeyCode.LEFT, move_hold_ms2)
         # times.sleep_random_ms()
         # keyboard.press_key(KeyCode.LEFT, move_hold_ms1)
-
 
     # ========== 增加干扰按键 ====================
     if counter.attack_count == max_z:
