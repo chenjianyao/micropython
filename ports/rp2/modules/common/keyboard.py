@@ -92,10 +92,12 @@ KEY_MAP = {
 def init():
     """初始化键盘"""
     global kbd
+    # 1. 创建键盘接口对象（准备“软件”）
     _kbd = KeyboardInterface()
-    usb.device.get().init(_kbd, builtin_driver=True)
+    # 2. 将接口注册到底层 USB 设备，并完成初始化（“点火”）builtin_driver 设为 False 禁用内置 USB 串口
+    usb.device.get().init(_kbd, builtin_driver=False)
 
-    # 等待主机打开键盘接口
+    # 3. 等待主机（电脑）完成枚举，确认连接就绪
     while not _kbd.is_open():
         time.sleep_ms(100)
     kbd = _kbd
