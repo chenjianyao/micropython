@@ -14,7 +14,8 @@ import random
 import time
 
 from cms import config, counter, direction, message_handler, times
-from common import keyboard, led, mouse, uart, usb
+from common import keyboardmouse as keyboard
+from common import led, uart, usb
 from usb.device.keyboard import KeyCode
 
 # ========================================
@@ -86,7 +87,7 @@ def handle_single():
     keyboard.press_key(KeyCode.S)
     counter.increase_attack_count()
 
-    mouse.move_by(210, 250)
+    keyboard.move_by(30, 20)
 
     # ========== 3.定时按辅助键 [Q, W, E, R, T] ==========
     if time.ticks_diff(now, next_q_time) >= 0:
@@ -171,8 +172,8 @@ def handle_pi():
 # ========================================
 usb.init()
 led.init()
-keyboard.init()
-mouse.init()
+# keyboard.init()
+keyboardmouse.init()
 uart.init()
 
 # ========== 主循环 ==========
