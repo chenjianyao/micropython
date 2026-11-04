@@ -1,4 +1,4 @@
-"""键盘相关"""
+"""键盘与鼠标相关"""
 
 import random
 import time

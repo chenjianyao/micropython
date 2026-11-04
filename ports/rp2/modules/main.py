@@ -172,8 +172,7 @@ def handle_pi():
 # ========================================
 usb.init()
 led.init()
-# keyboard.init()
-keyboardmouse.init()
+keyboard.init()
 uart.init()
 
 # ========== 主循环 ==========
