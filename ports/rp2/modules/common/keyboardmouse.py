@@ -4,6 +4,7 @@ import random
 import time
 
 import usb.device
+from usb.device.keyboard import KeyCode
 from usb.device.keyboardmouse import KeyboardMouseInterface
 
 keyboardmouse = None
