@@ -14,8 +14,7 @@ import random
 import time
 
 from cms import config, counter, direction, message_handler, times
-from common import keyboardmouse as keyboard
-from common import led, uart, usb
+from common import keyboard, led, uart, usb
 from usb.device.keyboard import KeyCode
 
 # ========================================
@@ -86,8 +85,6 @@ def handle_single():
     # ========== 2.自动按攻击键 [S] ====================
     keyboard.press_key(KeyCode.S)
     counter.increase_attack_count()
-
-    keyboard.move_by(30, 20)
 
     # ========== 3.定时按辅助键 [Q, W, E, R, T] ==========
     if time.ticks_diff(now, next_q_time) >= 0:
