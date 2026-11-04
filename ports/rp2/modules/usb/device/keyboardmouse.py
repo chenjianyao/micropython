@@ -98,7 +98,7 @@ class KeyboardMouseInterface(HIDInterface):
 
         # 在报告前加上 Report ID 后发送
         full_report = bytes([_REPORT_ID_KEYBOARD]) + bytes(r)
-        if self.send_report(full_report, timeout_ms):
+        if super().send_report(full_report, timeout_ms):
             # Swap buffers if the previous one is newly queued to send, so
             # any subsequent call can't modify that buffer mid-send
             self._key_reports[0] = s
