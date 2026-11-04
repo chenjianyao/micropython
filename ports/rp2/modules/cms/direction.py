@@ -1,6 +1,6 @@
 """方向，角色面对的哪个方向"""
 
-face = "left"  # 朝向
+face = "right"  # 默认朝右
 LEFT = "left"
 RIGHT = "right"
 
