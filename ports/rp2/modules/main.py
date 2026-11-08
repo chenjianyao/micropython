@@ -127,27 +127,26 @@ def handle_single():
         counter.init_attack_count()
         counter.init_skill_count()
 
-        move_hold_ms1 = random.randint(175, 185)
-        move_hold_ms2 = random.randint(75, 85)
+        move_hold_ms1 = random.randint(75, 85)
         # 判断当前朝向，如果当前朝左，向右移动；如果当前朝右，则向左移动
 
         if direction.is_right():
             # 向左移动 -> 向右移动
-            # times.sleep_random_ms()
-            # keyboard.press_key(KeyCode.LEFT, move_hold_ms1)
-            # time.sleep_ms(10000)
-            # keyboard.press_key(KeyCode.S)
-            # times.sleep_random_ms()
-            # keyboard.press_key(KeyCode.RIGHT, move_hold_ms1)
-            
+            times.sleep_random_ms()
+            keyboard.press_key(KeyCode.LEFT, move_hold_ms1)
+            time.sleep_ms(1000)
+            keyboard.press_key(KeyCode.S)
             times.sleep_random_ms()
             keyboard.press_key(KeyCode.RIGHT, move_hold_ms1)
+            
+            # times.sleep_random_ms()
+            # keyboard.press_key(KeyCode.RIGHT, move_hold_ms1)
             
         else:
             # 向右移动 -> 向左移动
             times.sleep_random_ms()
             keyboard.press_key(KeyCode.RIGHT, move_hold_ms1)
-            time.sleep_ms(10000)
+            time.sleep_ms(1000)
             keyboard.press_key(KeyCode.S)
             times.sleep_random_ms()
             keyboard.press_key(KeyCode.LEFT, move_hold_ms1)
