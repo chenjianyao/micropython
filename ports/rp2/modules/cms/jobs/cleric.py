@@ -34,7 +34,8 @@ ATTACK_KEY = KeyCode.D
 
 
 def auto_play():
-    play_stand_still()
+    # play_stand_still()
+    play_keep_moving()
 
 
 def play_stand_still():
