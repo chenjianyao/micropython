@@ -15,9 +15,12 @@ class Cleric(Bot):
     def start(self):
         self.take_mp()
         self.feed_pet()
+        keyboard.press_key(KeyCode.Q)
         self.use_skill(KeyCode.Q, 100000, 5000)
+        keyboard.press_key(KeyCode.W)
         self.use_skill(KeyCode.W, 200000, 5000)
         self.use_skill(KeyCode.E, 300000, 5000)
+        keyboard.press_key(KeyCode.D)
         self.attack(KeyCode.D, 800, 200)
         # self.move(10000, 1000)
 
