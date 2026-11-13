@@ -38,8 +38,8 @@ class Bot:
         # key -> 下次可执行的时刻 (ticks_ms)
         # 用 key 区分不同技能/动作，避免互相干扰
         self._next_time = {
-            FEED_PET_KEY: time.ticks_ms() + FEED_PET_INTERVAL_MS,
-            TAKE_MP_KEY: time.ticks_ms() + TAKE_MP_INTERVAL_MS,
+            str(FEED_PET_KEY): time.ticks_ms() + FEED_PET_INTERVAL_MS,
+            str(TAKE_MP_KEY): time.ticks_ms() + TAKE_MP_INTERVAL_MS,
         }
         ############# MP  #############
         # self.next_take_mp_time = time.ticks_ms() + TAKE_MP_INTERVAL_MS
@@ -66,12 +66,12 @@ class Bot:
         返回 True 表示现在可以执行，并自动记录下次可执行时间。
         """
         now = time.ticks_ms()
-        next_time = self._next_time.get(key, None)
+        next_time = self._next_time.get(str(key), None)
 
         # 首次执行，或已到达/超过预定时刻
         if next_time is None or time.ticks_diff(now, next_time) >= 0:
             actual_interval = self._jittered(interval_ms, jitter_ms)
-            self._next_time[key] = time.ticks_add(now, actual_interval)
+            self._next_time[str(key)] = time.ticks_add(now, actual_interval)
             return True
 
         return False
