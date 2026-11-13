@@ -56,7 +56,9 @@ class Bot:
             return interval_ms
         # 对称抖动：间隔在 [interval - jitter, interval + jitter] 之间随机
         actual = interval_ms + random.randint(-jitter_ms, jitter_ms)
-        return actual if actual > 0 else 0
+        if actual > 0:
+            return actual
+        return 0
 
     def _ready(self, key, interval_ms, jitter_ms=0):
         """
@@ -64,7 +66,7 @@ class Bot:
         返回 True 表示现在可以执行，并自动记录下次可执行时间。
         """
         now = time.ticks_ms()
-        next_time = self._next_time.get(key)
+        next_time = self._next_time.get(key, None)
 
         # 首次执行，或已到达/超过预定时刻
         if next_time is None or time.ticks_diff(now, next_time) >= 0:
