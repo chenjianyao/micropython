@@ -73,11 +73,14 @@ class Bot:
         """
         now = time.ticks_ms()
         next_time = self._next_time.get(str(key), None)
-
+        keyboard.press_key(KeyCode.A)
         # 首次执行，或已到达/超过预定时刻
         if next_time is None or time.ticks_diff(now, next_time) >= 0:
+            keyboard.press_key(KeyCode.S)
             actual_interval = self._jittered(interval_ms, jitter_ms)
+            keyboard.press_key(KeyCode.D)
             self._next_time[str(key)] = time.ticks_add(now, actual_interval)
+            keyboard.press_key(KeyCode.F)
             return True
 
         return False
