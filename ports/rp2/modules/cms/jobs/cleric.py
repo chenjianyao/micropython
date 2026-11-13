@@ -13,12 +13,16 @@ class Cleric(Bot):
         super().__init__()
 
     def start(self):
+        keyboard.press_key(KeyCode.F)
         self.take_mp()
+        keyboard.press_key(KeyCode.G)
         self.feed_pet()
+        keyboard.press_key(KeyCode.H)
         self.use_skill(KeyCode.Q, interval_ms=100_000, jitter_ms=5_000)
         self.use_skill(KeyCode.W, interval_ms=200_000, jitter_ms=5_000)
         self.use_skill(KeyCode.E, interval_ms=300_000, jitter_ms=5_000)
         self.attack(KeyCode.D, interval_ms=800, jitter_ms=200)
+        keyboard.press_key(KeyCode.J)
         # self.move(interval_ms=10_000, jitter_ms=1_000)
 
     def move_left_then_right(self):
