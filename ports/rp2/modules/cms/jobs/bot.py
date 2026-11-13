@@ -40,12 +40,6 @@ class Bot:
         self._next_time = {
             str(FEED_PET_KEY): time.ticks_ms() + FEED_PET_INTERVAL_MS,
             str(TAKE_MP_KEY): time.ticks_ms() + TAKE_MP_INTERVAL_MS,
-            str(KeyCode.Q): None,
-            str(KeyCode.W): None,
-            str(KeyCode.E): None,
-            str(KeyCode.A): None,
-            str(KeyCode.S): None,
-            str(KeyCode.D): None,
         }
         ############# MP  #############
         # self.next_take_mp_time = time.ticks_ms() + TAKE_MP_INTERVAL_MS
@@ -56,7 +50,7 @@ class Bot:
         """子类实现"""
         pass
 
-    def _jittered(interval_ms, jitter_ms):
+    def _jittered(self, interval_ms, jitter_ms):
         """返回带抖动的实际间隔，保证 >= 0"""
         if jitter_ms <= 0:
             return interval_ms
@@ -73,14 +67,10 @@ class Bot:
         """
         now = time.ticks_ms()
         next_time = self._next_time.get(str(key), None)
-        keyboard.press_key(KeyCode.A)
         # 首次执行，或已到达/超过预定时刻
         if next_time is None or time.ticks_diff(now, next_time) >= 0:
-            keyboard.press_key(KeyCode.S)
             actual_interval = self._jittered(interval_ms, jitter_ms)
-            keyboard.press_key(KeyCode.D)
             self._next_time[str(key)] = time.ticks_add(now, actual_interval)
-            keyboard.press_key(KeyCode.F)
             return True
 
         return False
