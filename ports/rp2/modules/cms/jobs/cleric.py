@@ -18,7 +18,7 @@ class Cleric(Bot):
         self.use_skill(KeyCode.Q, 100_000, 5_000)
         self.use_skill(KeyCode.W, 200_000, 5_000)
         self.use_skill(KeyCode.E, 300_000, 5_000)
-        self.attack(KeyCode.D, 1500, 200)
+        self.attack(KeyCode.D, 1500, 300)
         # self.move(10000, 1000)
 
     def move_left_then_right(self):
