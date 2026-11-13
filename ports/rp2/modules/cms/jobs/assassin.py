@@ -1,114 +1,54 @@
-"""
-飞侠
-"""
-
 import random
 import time
 
-from cms import config, counter, direction, times
-from common import keyboard
+from common import keyboard, led, uart, usb
 from usb.device.keyboard import KeyCode
 
-# ========================================
-max_z = 50
-# 100 秒 Q，W
-# 200 秒 E, R
-# 300 秒 T
-Q_PERIOD_MS = 100_000
-E_PERIOD_MS = 200_000
-T_PERIOD_MS = 300_000
-JITTER_MS = 2_000  # 间隔抖动
-
-next_q_time = time.ticks_add(time.ticks_ms(), Q_PERIOD_MS + random.randint(-JITTER_MS, JITTER_MS))
-next_e_time = time.ticks_add(time.ticks_ms(), E_PERIOD_MS + random.randint(-JITTER_MS, JITTER_MS))
-next_t_time = time.ticks_add(time.ticks_ms(), T_PERIOD_MS + random.randint(-JITTER_MS, JITTER_MS))
-
-BASE_INTERVAL_MS = 1000  # 基础间隔：每秒一次
-INTERVAL_JITTER_MS = 300  # 间隔抖动 ±300ms
+from cms import config, counter, direction, message_handler, times
+from cms.jobs.bot import Bot
 
 
-def auto_play():
-    global next_q_time
-    global next_e_time
-    global next_t_time
-    global max_z
-    now = time.ticks_ms()
+class Assassin(Bot):
+    def __init__(self):
+        super().__init__()
+        self.direction = "left"
 
-    # ========== 2.自动按攻击键 [S] ====================
-    keyboard.press_key(KeyCode.S)
-    counter.increase_attack_count()
+    def start(self):
+        self.take_mp()
+        self.feed_pet()
+        self.use_skill(KeyCode.Q, interval_ms=100_000, jitter_ms=5_000)
+        self.use_skill(KeyCode.W, interval_ms=200_000, jitter_ms=5_000)
+        self.use_skill(KeyCode.E, interval_ms=300_000, jitter_ms=5_000)
+        self.attack(KeyCode.D, interval_ms=800, jitter_ms=200)
+        # self.move(interval_ms=10_000, jitter_ms=1_000)
 
-    # ========== 3.定时按辅助键 [Q, W, E, R, T] ==========
-    if time.ticks_diff(now, next_q_time) >= 0:
-        # 100 秒按一次 Q，W
-        next_q_time = time.ticks_add(
-            time.ticks_ms(), Q_PERIOD_MS + random.randint(-JITTER_MS, JITTER_MS)
-        )
-        times.sleep_random_ms()
-        keyboard.press_key(KeyCode.Q)
-        counter.increase_skill_count()
-        times.sleep_random_ms()
-        keyboard.press_key(KeyCode.W)
-        counter.increase_skill_count()
-
-    elif time.ticks_diff(now, next_e_time) >= 0:
-        # 200 秒按一次 E, R
-        next_e_time = time.ticks_add(
-            time.ticks_ms(), E_PERIOD_MS + random.randint(-JITTER_MS, JITTER_MS)
-        )
-        times.sleep_random_ms()
-        keyboard.press_key(KeyCode.E)
-        counter.increase_skill_count()
-        times.sleep_random_ms()
-        keyboard.press_key(KeyCode.R)
-        counter.increase_skill_count()
-
-    elif time.ticks_diff(now, next_t_time) >= 0:
-        # 300 秒按一次 T
-        next_t_time = time.ticks_add(
-            time.ticks_ms(), T_PERIOD_MS + random.randint(-JITTER_MS, JITTER_MS)
-        )
-        times.sleep_random_ms()
-        keyboard.press_key(KeyCode.T)
-        counter.increase_skill_count()
-
-    # =========== 4.自动左右移动 ===================
-    # 攻击次数超限 100 下，左右运动
-    # 技能次数超限 21 下，左右运动
-    if counter.attack_count_exceeded_limit() or counter.skill_count_exceeded_limit():
-        counter.init_attack_count()
-        counter.init_skill_count()
-
-        move_hold_ms1 = random.randint(75, 85)
-        # 判断当前朝向，如果当前朝左，向右移动；如果当前朝右，则向左移动
-
-        if direction.is_right():
-            # 向左移动 -> 向右移动
+    def move_left_then_right(self):
+        """左右移动一下"""
+        move_left_hold_ms = random.randint(100, 150)
+        move_right_hold_ms = random.randint(100, 150)
+        if self.is_face_right():
+            # 向左移动
             times.sleep_random_ms()
-            keyboard.press_key(KeyCode.LEFT, move_hold_ms1)
-            time.sleep_ms(1000)
-            keyboard.press_key(KeyCode.S)
+            keyboard.press_key(KeyCode.LEFT, move_left_hold_ms)
             times.sleep_random_ms()
-            keyboard.press_key(KeyCode.RIGHT, move_hold_ms1)
-
-            # times.sleep_random_ms()
-            # keyboard.press_key(KeyCode.RIGHT, move_hold_ms1)
-
+            keyboard.press_key(KeyCode.LEFT, (300 - move_left_hold_ms))
+            times.sleep_random_ms()
+            keyboard.press_key(KeyCode.D)
+            times.sleep_random_ms()
+            keyboard.press_key(KeyCode.RIGHT, move_right_hold_ms)
+            times.sleep_random_ms()
+            keyboard.press_key(KeyCode.RIGHT, (300 - move_right_hold_ms))
+            self.change_direction()
         else:
-            # 向右移动 -> 向左移动
+            # 向右移动
             times.sleep_random_ms()
-            keyboard.press_key(KeyCode.RIGHT, move_hold_ms1)
-            time.sleep_ms(1000)
-            keyboard.press_key(KeyCode.S)
+            keyboard.press_key(KeyCode.RIGHT, move_right_hold_ms)
             times.sleep_random_ms()
-            keyboard.press_key(KeyCode.LEFT, move_hold_ms1)
-
-    # ========== 增加干扰按键 ====================
-    if counter.attack_count == max_z:
-        max_z = random.randint(50, 65)
-        times.sleep_random_ms()
-        keyboard.press_key(KeyCode.Z)
-
-    jitter = random.randint(-INTERVAL_JITTER_MS, INTERVAL_JITTER_MS)
-    wait_ms = max(500, BASE_INTERVAL_MS + jitter)
-    time.sleep_ms(wait_ms)
+            keyboard.press_key(KeyCode.RIGHT, (300 - move_right_hold_ms))
+            times.sleep_random_ms()
+            keyboard.press_key(KeyCode.D)
+            times.sleep_random_ms()
+            keyboard.press_key(KeyCode.LEFT, move_left_hold_ms)
+            times.sleep_random_ms()
+            keyboard.press_key(KeyCode.LEFT, (300 - move_left_hold_ms))
+            self.change_direction()

@@ -1,3 +1,1 @@
-from . import usb
-from . import led
-from . import keyboard
+from . import keyboard, keyboardmouse, led, mouse, uart, usb
