@@ -15,11 +15,11 @@ class Cleric(Bot):
     def start(self):
         self.take_mp()
         self.feed_pet()
-        self.use_skill(KeyCode.Q, interval_ms=100_000, jitter_ms=5_000)
-        self.use_skill(KeyCode.W, interval_ms=200_000, jitter_ms=5_000)
-        self.use_skill(KeyCode.E, interval_ms=300_000, jitter_ms=5_000)
-        self.attack(KeyCode.D, interval_ms=800, jitter_ms=200)
-        # self.move(interval_ms=10_000, jitter_ms=1_000)
+        self.use_skill(KeyCode.Q, 100000, 5000)
+        self.use_skill(KeyCode.W, 200000, 5000)
+        self.use_skill(KeyCode.E, 300000, 5000)
+        self.attack(KeyCode.D, 800, 200)
+        # self.move(10000, 1000)
 
     def move_left_then_right(self):
         """左右移动一下"""
