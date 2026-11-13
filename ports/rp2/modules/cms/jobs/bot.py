@@ -40,6 +40,12 @@ class Bot:
         self._next_time = {
             str(FEED_PET_KEY): time.ticks_ms() + FEED_PET_INTERVAL_MS,
             str(TAKE_MP_KEY): time.ticks_ms() + TAKE_MP_INTERVAL_MS,
+            str(KeyCode.Q): None,
+            str(KeyCode.W): None,
+            str(KeyCode.E): None,
+            str(KeyCode.A): None,
+            str(KeyCode.S): None,
+            str(KeyCode.D): None,
         }
         ############# MP  #############
         # self.next_take_mp_time = time.ticks_ms() + TAKE_MP_INTERVAL_MS
