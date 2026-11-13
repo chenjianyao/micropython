@@ -5,9 +5,10 @@
 import random
 import time
 
-from cms import config, counter, direction, times
 from common import keyboard
 from usb.device.keyboard import KeyCode
+
+from cms import config, counter, direction, times
 
 # ========================================
 max_z = 50
@@ -24,7 +25,7 @@ next_e_time = time.ticks_add(time.ticks_ms(), E_PERIOD_MS + random.randint(-JITT
 next_t_time = time.ticks_add(time.ticks_ms(), T_PERIOD_MS + random.randint(-JITTER_MS, JITTER_MS))
 next_attack_time = time.ticks_ms()
 next_turnaround_time = time.ticks_ms()
-move_hold_ms = random.randint(300_000, 100_000)
+move_hold_ms = random.randint(3_000, 10_000)
 
 BASE_INTERVAL_MS = 1000  # 基础间隔：每秒一次
 INTERVAL_JITTER_MS = 300  # 间隔抖动 ±300ms
@@ -175,7 +176,7 @@ def play_keep_moving():
             direction.set_face_left()
         else:
             # 持续 3 到 10 秒
-            move_hold_ms = random.randint(300_000, 100_000)
+            move_hold_ms = random.randint(3_000, 10_000)
             keyboard.key_down(KeyCode.RIGHT)
             direction.set_face_right()
 
