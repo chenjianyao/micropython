@@ -29,16 +29,15 @@ class Cleric(Bot):
         
         if self.is_face_right():
             # 向左移动
-            times.sleep_random_ms()
             keyboard.press_key(KeyCode.LEFT, move_left_hold_ms)
             times.sleep_random_ms()
             keyboard.press_key(KeyCode.LEFT, (300 - move_left_hold_ms))
             self.change_direction()
         else:
             # 向右移动
-            times.sleep_random_ms()
             keyboard.press_key(KeyCode.RIGHT, move_right_hold_ms)
             times.sleep_random_ms()
             keyboard.press_key(KeyCode.RIGHT, (300 - move_right_hold_ms))
             self.change_direction()
+       
        times.sleep_random_long_ms()
