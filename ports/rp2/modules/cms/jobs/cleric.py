@@ -40,4 +40,4 @@ class Cleric(Bot):
             keyboard.press_key(KeyCode.RIGHT, (300 - move_right_hold_ms))
             self.change_direction()
        
-       times.sleep_random_long_ms()
+        times.sleep_random_long_ms()
